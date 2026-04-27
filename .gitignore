@@ -1,0 +1,11 @@
+# Maven / Java
+target/
+*.jar
+*.war
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
