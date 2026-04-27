@@ -1,0 +1,3 @@
+com\vendorhub\gateway\ApiGatewayApplication.class
+com\vendorhub\gateway\filter\JwtAuthFilter.class
+com\vendorhub\gateway\aspect\GatewayLoggingAspect.class
