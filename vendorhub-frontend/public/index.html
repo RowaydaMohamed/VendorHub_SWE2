@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="description" content="VendorHub - Multi-vendor marketplace" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>VendorHub</title>
+    <!-- Tailwind CDN - loads at runtime so it works in the built app -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              indigo: {
+                50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe',
+                300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1',
+                600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81'
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+      .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <noscript>You need to enable JavaScript to run VendorHub.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

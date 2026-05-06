@@ -1,0 +1,128 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      httpclient:
+        connect-timeout: 10000
+        response-timeout: 30s
+      routes:
+        # ── Auth Service ─────────────────────────────────────────────
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/auth/**
+
+        - id: admin-users
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/admin/users/**
+
+        # ── Product Service ──────────────────────────────────────────
+
+        # Public product browsing (no auth)
+        - id: products-public
+          uri: lb://product-service
+          predicates:
+            - Path=/api/products/public/**
+
+        # Reviews (authenticated customers)
+        - id: product-reviews
+          uri: lb://product-service
+          predicates:
+            - Path=/api/products/*/reviews
+
+        # Vendor product management
+        - id: vendor-products
+          uri: lb://product-service
+          predicates:
+            - Path=/api/vendor/products/**
+
+        # Admin product management
+        - id: admin-products
+          uri: lb://product-service
+          predicates:
+            - Path=/api/admin/products/**
+
+        # Categories - public GET, admin POST
+        - id: categories
+          uri: lb://product-service
+          predicates:
+            - Path=/api/categories/**
+
+        # ── Order Service ────────────────────────────────────────────
+        - id: cart
+          uri: lb://order-service
+          predicates:
+            - Path=/api/cart/**
+
+        - id: orders
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders/**
+
+        - id: favorites
+          uri: lb://order-service
+          predicates:
+            - Path=/api/favorites/**
+
+        - id: vendor-orders
+          uri: lb://order-service
+          predicates:
+            - Path=/api/vendor/orders/**
+
+        - id: admin-orders
+          uri: lb://order-service
+          predicates:
+            - Path=/api/admin/orders/**
+
+        # ── Notification Service ─────────────────────────────────────
+        - id: notifications
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notifications/**
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns:
+              - "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+              - PATCH
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+            maxAge: 3600
+
+jwt:
+  secret: vendorhub_super_secret_jwt_key_that_is_at_least_256_bits_long_for_hs256
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+    registry-fetch-interval-seconds: 5
+    initial-instance-info-replication-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always

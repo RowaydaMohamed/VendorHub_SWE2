@@ -1,11 +1,31 @@
-# Maven / Java
+# Maven
 target/
 *.jar
 *.war
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
 
 # Logs
 *.log
+logs/
 
-# OS files
+# Environment
+.env
+*.env.local
+
+# Node / React
+node_modules/
+build/
+dist/
+
+# Docker volumes
+uploads/
+
+# OS
 .DS_Store
 Thumbs.db
